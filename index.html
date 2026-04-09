@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="eDataFoot — Prédictions Football par Intelligence Artificielle. Rejoins notre canal Telegram gratuit." />
+  <title>eDataFoot — Prédictions Football IA</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0f;
+      --card:     #16161a;
+      --border:   #2a2a35;
+      --accent:   #f97316;
+      --accent2:  #a855f7;
+      --cyan:     #06b6d4;
+      --text:     #f1f5f9;
+      --muted:    #64748b;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(168,85,247,.12) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(249,115,22,.08) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrapper {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 420px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 24px;
+    }
+
+    /* Badge LIVE */
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(249,115,22,.15);
+      border: 1px solid rgba(249,115,22,.3);
+      color: var(--accent);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px;
+    }
+    .live-dot {
+      width: 7px; height: 7px;
+      background: var(--accent); border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.7); }
+    }
+
+    /* Photo de profil */
+    .profile-wrap { position: relative; width: 100px; height: 100px; }
+    .profile-ring {
+      position: absolute; inset: -4px; border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--cyan), var(--accent));
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .profile-ring::after {
+      content: ''; position: absolute; inset: 3px;
+      background: var(--bg); border-radius: 50%;
+    }
+    .profile-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border-radius: 50%; object-fit: cover; z-index: 1;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+    }
+
+    /* Nom */
+    .identity { text-align: center; }
+    .name {
+      font-size: 26px; font-weight: 800; letter-spacing: -.02em;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline { margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .tagline strong { color: var(--cyan); -webkit-text-fill-color: var(--cyan); }
+
+    /* Stats */
+    .stats {
+      display: flex; width: 100%;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .stat { flex: 1; padding: 14px 10px; text-align: center; position: relative; }
+    .stat + .stat::before {
+      content: ''; position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px; background: var(--border);
+    }
+    .stat-num { font-size: 20px; font-weight: 800; color: var(--accent); }
+    .stat-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+
+    /* Boutons */
+    .btn-group { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; padding: 18px 24px; border-radius: 16px;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+      border: none; letter-spacing: .01em;
+    }
+    .btn:active { transform: scale(.97); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: #fff;
+      box-shadow: 0 0 32px rgba(249,115,22,.35);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(249,115,22,.5); }
+
+    .btn-vip {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: #fff; box-shadow: 0 0 32px rgba(168,85,247,.3);
+    }
+    .btn-vip:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(168,85,247,.5); }
+
+    .btn-tiktok {
+      background: linear-gradient(135deg, #010101, #1a1a2e);
+      border: 1px solid #333; color: #fff;
+    }
+    .btn-tiktok:hover { transform: translateY(-2px); border-color: #555; }
+
+    .btn-icon { font-size: 22px; flex-shrink: 0; }
+    .btn-text { display: flex; flex-direction: column; align-items: flex-start; }
+    .btn-label { font-size: 15px; font-weight: 700; }
+    .btn-sub   { font-size: 11px; font-weight: 400; opacity: .75; }
+
+    /* Disclaimer */
+    .disclaimer {
+      width: 100%;
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 11.5px; color: var(--muted);
+      line-height: 1.6; text-align: center;
+    }
+    .disclaimer strong { color: var(--text); }
+
+    /* Footer */
+    footer {
+      position: relative; z-index: 1;
+      margin-top: 24px; text-align: center;
+      font-size: 11px; color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 8px; transition: color .2s; }
+    footer a:hover { color: var(--text); }
+    .footer-sep { opacity: .3; }
+
+    @media (max-width: 390px) {
+      body { padding: 28px 16px 60px; }
+      .name { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Badge LIVE -->
+  <div class="live-badge">
+    <span class="live-dot"></span>
+    Actif aujourd'hui
+  </div>
+
+  <!-- Photo de profil -->
+  <div class="profile-wrap">
+    <div class="profile-ring"></div>
+    <img
+      src="profile.jpg"
+      alt="eDataFoot"
+      class="profile-img"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    />
+    <div class="profile-img" style="display:none;">⚽</div>
+  </div>
+
+  <!-- Identité -->
+  <div class="identity">
+    <div class="name">eDataFoot</div>
+    <div class="tagline">
+      Prédictions Football par <strong>Intelligence Artificielle</strong><br>
+      Analyses objectives · Données réelles · 0 parti pris
+    </div>
+  </div>
+
+  <!-- Statistiques -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">+75%</div>
+      <div class="stat-lbl">Précision</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5+</div>
+      <div class="stat-lbl">Signaux/jour</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-lbl">Ligues suivies</div>
+    </div>
+  </div>
+
+  <!-- Boutons -->
+  <div class="btn-group">
+
+    <!-- Telegram Public -->
+    <a href="https://t.me/efootdata" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      <span class="btn-icon">
+        <svg width="28" height="28" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="120" cy="120" r="120" fill="white" fill-opacity="0.15"/>
+          <path d="M176.6 68.4L152 174.2c-1.8 7.9-6.4 9.9-13 6.2l-36-26.5-17.4 16.7c-1.9 1.9-3.5 3.5-7.2 3.5l2.6-36.4 66.5-60.1c2.9-2.6-.6-4-4.5-1.4l-82.2 51.7-35.4-11.1c-7.7-2.4-7.8-7.7 1.6-11.4l138.3-53.3c6.4-2.3 12 1.6 9.8 10.6z" fill="white"/>
+        </svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-label">Canal Public Gratuit</span>
+        <span class="btn-sub">Rejoindre les prédictions du jour →</span>
+      </span>
+    </a>
+
+    <!-- VIP -->
+    <a href="https://t.me/Efootdatavipbot?start=abonner" target="_blank" rel="noopener noreferrer" class="btn btn-vip">
+      <span class="btn-icon">💎</span>
+      <span class="btn-text">
+        <span class="btn-label">Accès VIP — 5 Signaux Premium</span>
+        <span class="btn-sub">Algorithme complet · 19,99€/mois</span>
+      </span>
+    </a>
+
+    <!-- TikTok -->
+    <a href="https://www.tiktok.com/@edatafoot" target="_blank" rel="noopener noreferrer" class="btn btn-tiktok">
+      <span class="btn-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.94a8.14 8.14 0 004.77 1.52V7.02a4.85 4.85 0 01-1-.33z"/>
+        </svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-label">Suivre sur TikTok</span>
+        <span class="btn-sub">Vidéos quotidiennes des meilleurs pronostics</span>
+      </span>
+    </a>
+
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <strong>⚠️ À titre informatif uniquement.</strong>
+    Les analyses publiées sont produites par un algorithme et ne constituent
+    pas un conseil financier ni une incitation aux paris d'argent.
+    Jouer comporte des risques. Jouez de manière responsable.
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <span>© 2026 eDataFoot</span>
+  <span class="footer-sep"> · </span>
+  <a href="tos.html">Conditions d'utilisation</a>
+  <span class="footer-sep"> · </span>
+  <a href="privacy.html">Politique de confidentialité</a>
+</footer>
+
+</body>
+</html>
