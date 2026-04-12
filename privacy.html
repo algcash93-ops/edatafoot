@@ -42,19 +42,56 @@
     .no-collect-icon { font-size: 32px; flex-shrink: 0; }
     .no-collect-text { color: var(--muted); font-size: 13px; line-height: 1.6; }
     .no-collect-text strong { color: var(--text); }
-    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+    .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 420px; }
     th {
       background: var(--card); color: var(--text);
       font-weight: 700; padding: 10px 14px;
       text-align: left; border-bottom: 1px solid var(--border);
+      white-space: nowrap;
     }
     td { color: var(--muted); padding: 10px 14px; border-bottom: 1px solid rgba(42,42,53,.5); }
     tr:last-child td { border-bottom: none; }
     hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
-    footer { text-align: center; margin-top: 48px; font-size: 11px; color: var(--muted); }
-    footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
+    footer { text-align: center; margin-top: 48px; font-size: 11px; color: var(--muted); padding: 8px 0; }
+    footer a { color: var(--muted); text-decoration: none; display: inline-block; padding: 8px 10px; min-height: 44px; line-height: 28px; }
     footer a:hover { color: var(--text); }
     a { color: var(--accent); }
+
+    /* ── Responsive — tablette ─────────────────────────────── */
+    @media (min-width: 768px) {
+      body { padding: 56px 40px 100px; font-size: 16px; }
+      h1 { font-size: 32px; }
+    }
+
+    /* ── Responsive — mobile (max 430px) ───────────────────── */
+    @media (max-width: 430px) {
+      body { padding: 28px 16px 64px; font-size: 14.5px; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 15px; margin: 24px 0 8px; }
+      .back { font-size: 13px; margin-bottom: 24px; min-height: 44px; display: inline-flex; align-items: center; }
+      .no-collect { padding: 14px 14px; gap: 12px; }
+      .no-collect-icon { font-size: 26px; }
+      .no-collect-text { font-size: 13px; }
+      table { font-size: 12.5px; }
+      th, td { padding: 9px 10px; }
+    }
+
+    /* ── Responsive — petit mobile (max 375px) ─────────────── */
+    @media (max-width: 375px) {
+      body { padding: 22px 12px 56px; font-size: 14px; line-height: 1.7; }
+      h1 { font-size: 22px; }
+      h2 { font-size: 14px; }
+      .meta { font-size: 11px; }
+      .no-collect { flex-direction: column; text-align: center; gap: 10px; }
+      ul { padding-left: 16px; }
+    }
+
+    /* ── Responsive — très petit (max 360px) ───────────────── */
+    @media (max-width: 360px) {
+      body { padding: 18px 10px 52px; font-size: 13.5px; }
+      h1 { font-size: 20px; }
+    }
   </style>
 </head>
 <body>
@@ -94,33 +131,35 @@
   <h2>3. Données collectées par les services tiers</h2>
   <p>Ce site redirige vers des services tiers dont les politiques de confidentialité leur sont propres :</p>
 
-  <table>
-    <thead>
-      <tr><th>Service</th><th>Usage</th><th>Politique</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>GitHub Pages</strong></td>
-        <td>Hébergement du site web</td>
-        <td><a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement" target="_blank">Voir →</a></td>
-      </tr>
-      <tr>
-        <td><strong>Telegram</strong></td>
-        <td>Canal public et bot d'abonnement</td>
-        <td><a href="https://telegram.org/privacy" target="_blank">Voir →</a></td>
-      </tr>
-      <tr>
-        <td><strong>Stripe</strong></td>
-        <td>Traitement des paiements VIP</td>
-        <td><a href="https://stripe.com/fr/privacy" target="_blank">Voir →</a></td>
-      </tr>
-      <tr>
-        <td><strong>TikTok</strong></td>
-        <td>Diffusion de vidéos courtes</td>
-        <td><a href="https://www.tiktok.com/legal/page/eea/privacy-policy/fr" target="_blank">Voir →</a></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Service</th><th>Usage</th><th>Politique</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GitHub Pages</strong></td>
+          <td>Hébergement du site web</td>
+          <td><a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement" target="_blank">Voir →</a></td>
+        </tr>
+        <tr>
+          <td><strong>Telegram</strong></td>
+          <td>Canal public et bot d'abonnement</td>
+          <td><a href="https://telegram.org/privacy" target="_blank">Voir →</a></td>
+        </tr>
+        <tr>
+          <td><strong>Stripe</strong></td>
+          <td>Traitement des paiements VIP</td>
+          <td><a href="https://stripe.com/fr/privacy" target="_blank">Voir →</a></td>
+        </tr>
+        <tr>
+          <td><strong>TikTok</strong></td>
+          <td>Diffusion de vidéos courtes</td>
+          <td><a href="https://www.tiktok.com/legal/page/eea/privacy-policy/fr" target="_blank">Voir →</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <h2>4. Abonnement VIP (Stripe + Telegram)</h2>
   <p>

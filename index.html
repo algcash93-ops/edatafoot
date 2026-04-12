@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="eDataFoot — Prédictions Football par Intelligence Artificielle. Rejoins notre canal Telegram gratuit." />
-  <meta name="tiktok-developers-site-verification" content="QeT6BoYvjTEEaYC3SjGHlCE5RmtWqZ24" />
+  <meta name="tiktok-developers-site-verification" content="hajkFWdDbiLsMF85vsbKKN3SaudKEVcU" />
   <title>eDataFoot — Prédictions Football IA</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -302,10 +302,75 @@
     footer a:hover { color: var(--text); }
     .footer-sep { opacity: .3; }
 
-    @media (max-width: 390px) {
-      body { padding: 28px 14px 60px; }
-      .name { font-size: 22px; }
+    /* ── Responsive — tablette (768px+) ───────────────────── */
+    @media (min-width: 768px) {
+      body { padding: 60px 32px 100px; }
+      .wrapper { max-width: 480px; gap: 28px; }
+      .name { font-size: 30px; }
+      .profile-wrap { width: 116px; height: 116px; }
+      .stat-num { font-size: 22px; }
+    }
+
+    /* ── Responsive — mobile standard (max 430px) ──────────── */
+    @media (max-width: 430px) {
+      body { padding: 28px 16px 64px; }
+      .name { font-size: 24px; }
+      .tagline { font-size: 13px; }
+      .stat-num { font-size: 18px; }
+      .stat-lbl { font-size: 10px; }
+      .stat { padding: 12px 8px; }
+      .btn { padding: 15px 20px; font-size: 14px; }
+      .btn-label { font-size: 14px; }
+      .btn-sub { font-size: 11px; }
       .pay-btn-main { font-size: 13px; }
+      .pay-btn-sub { font-size: 11px; }
+      .vip-title { font-size: 15px; }
+      .vip-price strong { font-size: 20px; }
+      .vip-feature { font-size: 13px; }
+    }
+
+    /* ── Responsive — petit mobile (max 375px — iPhone SE/12 mini) */
+    @media (max-width: 375px) {
+      body { padding: 22px 12px 56px; }
+      .wrapper { gap: 20px; }
+      .name { font-size: 21px; }
+      .tagline { font-size: 12.5px; }
+      .profile-wrap { width: 88px; height: 88px; }
+      .profile-img { font-size: 30px; }
+      .stat-num { font-size: 17px; }
+      .btn { padding: 14px 16px; gap: 10px; }
+      .btn-icon { font-size: 20px; }
+      .btn-label { font-size: 14px; }
+      .pay-btn-telegram, .pay-btn-web { padding: 13px 14px; }
+      .pay-btn-icon { font-size: 20px; }
+      .vip-features { padding: 12px 14px; }
+      .pay-options { padding: 12px 12px 14px; }
+      .disclaimer { font-size: 11px; padding: 12px 14px; }
+    }
+
+    /* ── Responsive — très petit mobile (max 360px — Android courant) */
+    @media (max-width: 360px) {
+      body { padding: 18px 10px 52px; }
+      .name { font-size: 19px; }
+      .stat-num { font-size: 16px; }
+      .stat-lbl { font-size: 9px; letter-spacing: .04em; }
+      .btn-label { font-size: 13px; }
+      .btn-sub { font-size: 10.5px; }
+      .vip-title { font-size: 14px; }
+      .vip-price strong { font-size: 18px; }
+      .vip-price { font-size: 12px; }
+      .vip-feature { font-size: 12.5px; }
+    }
+
+    /* ── Footer — touch targets ─────────────────────────────── */
+    footer {
+      padding: 8px 0;
+    }
+    footer a {
+      display: inline-block;
+      padding: 8px 10px;
+      min-height: 44px;
+      line-height: 28px;
     }
   </style>
 </head>
